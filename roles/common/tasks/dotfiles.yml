@@ -1,5 +1,5 @@
 - name: Fetch dotfiles from github repository
   git:
     repo: "{{ dotfiles_git }}"
-    dest: "/home/{{ username }}/foo"
+    dest: "/home/{{ username }}"
     accept_hostkey: yes
