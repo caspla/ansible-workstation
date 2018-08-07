@@ -1,0 +1,9 @@
+- include: create-user.yml
+- include: apt-update.yml
+- include: basis-packages.yml
+- include: xfce.yml
+#- include: devtools.yml
+- include: skype.yml
+- include: teamviewer.yml
+- include: google-drive.yml
+- include: dotfiles.yml

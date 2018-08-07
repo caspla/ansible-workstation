@@ -1,0 +1,56 @@
+- name: Add dev package keys
+  apt_key: url={{ item }} state=present
+  with_items:
+    - https://download.docker.com/linux/debian/gpg
+
+- name: Remove dev packages
+  apt: name={{ item }} state=absent
+  with_items:
+   - docker
+   - docker-engine
+   - docker.io
+
+- name: Install dev packages
+  apt: name={{ item }} state=present
+  with_items:
+    - docker-ce
+    - composer
+    - php-cli
+    - mysql-client
+    - virtualbox
+    - vagrant
+    - wine
+
+- name: Create HeidiSQL target directory
+  file: path="{{ home_dir }}/.wine/drive_c/Programm Files/HeidiSQL" state=directory
+
+- name: Download and extract HeidiSQL archive
+  unarchive:
+    src: https://www.heidisql.com/downloads/releases/HeidiSQL_9.5_64_Portable.zip
+    dest: "{{ home_dir }}/.wine/drive_c/Programm Files/HeidiSQL"
+    remote_src: yes
+
+#- name: Create HeidiSQL start script
+
+- name: Download and extract postman archive
+  unarchive:
+    src: https://dl.pstmn.io/download/latest/linux64
+    dest: "/opt"
+    remote_src: yes
+    list_files: yes
+  register: new_archive
+
+- name: Download & extract phpstorm archive
+  unarchive:
+    src: https://download.jetbrains.com/webide/PhpStorm-2018.2.tar.gz
+    dest: "/opt"
+    remote_src: yes
+    list_files: yes
+  register: new_archive
+
+- name: Rename PhpStorm directory
+  command: "mv /opt/{{ new_archive.files[0] }} /opt/phpstorm"
+
+- name: Install Visual Studio code
+  apt:
+    deb: https://go.microsoft.com/fwlink/?LinkID=760868

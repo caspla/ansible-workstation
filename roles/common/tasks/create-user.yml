@@ -1,0 +1,12 @@
+- name: Create user and add to sudo group
+  user:
+    name: "{{ username }}"
+    group: sudo
+    state: present
+
+- name: Create directories
+  file: name="{{ item }}" state=directory
+  with_items:
+    - "/tmp/ansible"
+    - "{{ home_dir }}/.themes"
+    - "{{ home_dir }}/.icons"

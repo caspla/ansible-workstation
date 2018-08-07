@@ -1,0 +1,5 @@
+- name: Fetch dotfiles from github repository
+  git:
+    repo: "{{ dotfiles_git }}"
+    dest: "/home/{{ username }}/foo"
+    accept_hostkey: yes

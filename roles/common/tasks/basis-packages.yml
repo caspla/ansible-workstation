@@ -1,0 +1,30 @@
+- name: Install basis packages
+  apt: name={{ item }} state=present
+  with_items:
+    - firmware-linux
+    - build-essential
+    - binutils-multiarch
+    - ca-certificates
+    - gnupg2
+    - software-properties-common
+    - apt-transport-https
+    - mtp-tools
+    - davfs2
+    - unzip
+    - gdebi
+    - htop
+    - jmtpfs
+    - neofetch
+    - chromium
+    - chromium-l10n
+    - thunderbird
+    - libreoffice
+    - keepassx
+    - nmap
+    - curl
+    - wget
+    - rsync
+    - mc
+    - vim
+    - gnome-calculator
+    - gparted

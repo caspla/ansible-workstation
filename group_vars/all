@@ -1,0 +1,4 @@
+username: pascal
+home_dir: /home/pascal
+tmp_dir: /tmp/ansible
+dotfiles_git: https://github.com/caspla/dotfiles.git
