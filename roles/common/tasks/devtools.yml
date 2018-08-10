@@ -1,9 +1,11 @@
 - name: Add dev package keys
+  become: true
   apt_key: url={{ item }} state=present
   with_items:
     - https://download.docker.com/linux/debian/gpg
 
 - name: Remove dev packages
+  become: true
   apt: name={{ item }} state=absent
   with_items:
    - docker
@@ -11,6 +13,7 @@
    - docker.io
 
 - name: Install dev packages
+  become: true
   apt: name={{ item }} state=present
   with_items:
     - docker-ce
@@ -33,6 +36,7 @@
 #- name: Create HeidiSQL start script
 
 - name: Download and extract postman archive
+  become: true
   unarchive:
     src: https://dl.pstmn.io/download/latest/linux64
     dest: "/opt"
@@ -41,6 +45,7 @@
   register: new_archive
 
 - name: Download & extract phpstorm archive
+  become: true
   unarchive:
     src: https://download.jetbrains.com/webide/PhpStorm-2018.2.tar.gz
     dest: "/opt"
@@ -49,8 +54,10 @@
   register: new_archive
 
 - name: Rename PhpStorm directory
+  become: true
   command: "mv /opt/{{ new_archive.files[0] }} /opt/phpstorm"
 
 - name: Install Visual Studio code
+  become: true
   apt:
     deb: https://go.microsoft.com/fwlink/?LinkID=760868
