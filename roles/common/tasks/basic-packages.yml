@@ -2,7 +2,6 @@
   become: true
   apt: name={{ item }} state=present
   with_items:
-    - firmware-linux
     - build-essential
     - binutils-multiarch
     - ca-certificates
