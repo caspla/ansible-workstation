@@ -34,7 +34,7 @@
     - wine
 
   become: true
-  apt: deb={{ item }}
+  apt: deb={{ item }} state=present
   with_items:
     - https://github.com/adobe/brackets/releases/download/release-1.13/Brackets.Release.1.13.64-bit.deb
     - https://releases.hashicorp.com/vagrant/2.1.2/vagrant_2.1.2_x86_64.deb
