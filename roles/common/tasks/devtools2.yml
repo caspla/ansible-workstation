@@ -1,0 +1,33 @@
+
+- name: Create HeidiSQL target directory
+  file: path="{{ home_dir }}/.wine/drive_c/Programm Files/HeidiSQL" state=directory
+
+- name: Download and extract HeidiSQL archive
+  unarchive:
+    src: https://www.heidisql.com/downloads/releases/HeidiSQL_9.5_64_Portable.zip
+    dest: "{{ home_dir }}/.wine/drive_c/Programm Files/HeidiSQL"
+    remote_src: yes
+
+#- name: Create HeidiSQL start script
+
+- name: Download and extract postman archive
+  become: true
+  unarchive:
+    src: https://dl.pstmn.io/download/latest/linux64
+    dest: "/opt"
+    remote_src: yes
+    list_files: yes
+  register: new_archive
+
+- name: Download & extract phpstorm archive
+  become: true
+  unarchive:
+    src: https://download.jetbrains.com/webide/PhpStorm-2018.2.tar.gz
+    dest: "/opt"
+    remote_src: yes
+    list_files: yes
+  register: new_archive
+
+- name: Rename PhpStorm directory
+  become: true
+  command: "mv /opt/{{ new_archive.files[0] }} /opt/phpstorm"

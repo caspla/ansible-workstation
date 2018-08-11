@@ -1,14 +1,22 @@
 - name: Fetch dotfiles from github repository
   git:
     repo: "{{ dotfiles_git }}"
-    dest: "/home/{{ username }}/dotfiles"
+    dest: "/home/{{ ansible_env.USER }}/dotfiles"
     accept_hostkey: yes
+
+- name: Create needed directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "/home/{{ ansible_env.USER }}/.config"
 
 - name: link dotfiles
   file:
-    src: "/home/{{ username }}/dotfiles/{{ item.src }}"
-    dest: "/home/{{ username }}/{{ item.dest }}"
+    src: "/home/{{ ansible_env.USER }}/dotfiles/{{ item.src }}"
+    dest: "/home/{{ ansible_env.USER }}/{{ item.dest }}"
     state: link
+    force: yes
   with_items:
     - { src: "bash/aliases", dest: ".bash_aliases" }
     - { src: "bash/profile", dest: ".profile" }

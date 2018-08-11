@@ -1,6 +1,10 @@
-- include: create-user.yml
+- name: Create directories
+  file: name="{{ item }}" state=directory
+  with_items:
+    - "/home/{{ ansible_env.USER }}/tmp"
+
 - include: apt-update.yml
-- include: basis-packages.yml
+- include: basic-packages.yml
 - include: xfce.yml
 - include: devtools.yml
 - include: teamviewer.yml

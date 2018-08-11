@@ -3,14 +3,23 @@
   apt_key: url={{ item }} state=present
   with_items:
     - https://download.docker.com/linux/debian/gpg
+    - https://www.virtualbox.org/download/oracle_vbox_2016.asc
 
-- name: Remove dev packages
+- name: Add dev repositories
+  become: true
+  apt_repository: repo={{ item }} state=present
+  with_items:
+    - "deb https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+    - "deb https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib"
+
+- name: Remove old dev packages
   become: true
   apt: name={{ item }} state=absent
   with_items:
    - docker
    - docker-engine
    - docker.io
+   - virtualbox
 
 - name: Install dev packages
   become: true
@@ -20,44 +29,12 @@
     - composer
     - php-cli
     - mysql-client
-    - virtualbox
+    - virtualbox-5.2
     - vagrant
     - wine
 
-- name: Create HeidiSQL target directory
-  file: path="{{ home_dir }}/.wine/drive_c/Programm Files/HeidiSQL" state=directory
-
-- name: Download and extract HeidiSQL archive
-  unarchive:
-    src: https://www.heidisql.com/downloads/releases/HeidiSQL_9.5_64_Portable.zip
-    dest: "{{ home_dir }}/.wine/drive_c/Programm Files/HeidiSQL"
-    remote_src: yes
-
-#- name: Create HeidiSQL start script
-
-- name: Download and extract postman archive
   become: true
-  unarchive:
-    src: https://dl.pstmn.io/download/latest/linux64
-    dest: "/opt"
-    remote_src: yes
-    list_files: yes
-  register: new_archive
-
-- name: Download & extract phpstorm archive
-  become: true
-  unarchive:
-    src: https://download.jetbrains.com/webide/PhpStorm-2018.2.tar.gz
-    dest: "/opt"
-    remote_src: yes
-    list_files: yes
-  register: new_archive
-
-- name: Rename PhpStorm directory
-  become: true
-  command: "mv /opt/{{ new_archive.files[0] }} /opt/phpstorm"
-
-- name: Install Visual Studio code
-  become: true
-  apt:
-    deb: https://go.microsoft.com/fwlink/?LinkID=760868
+  apt: deb={{ item }}
+  with_items:
+    - https://github.com/adobe/brackets/releases/download/release-1.13/Brackets.Release.1.13.64-bit.deb
+    - https://releases.hashicorp.com/vagrant/2.1.2/vagrant_2.1.2_x86_64.deb
