@@ -21,7 +21,7 @@
    - docker.io
    - virtualbox
 
-- name: Install dev packages
+- name: Install dev packages (1/2)
   become: true
   apt: name={{ item }} state=present
   with_items:
@@ -32,9 +32,10 @@
     - virtualbox-5.2
     - vagrant
     - wine
-
+    
+- name: Install dev packages (2/2)
   become: true
-  apt: deb={{ item }} state=present
+  apt: deb={{ item }}
   with_items:
     - https://github.com/adobe/brackets/releases/download/release-1.13/Brackets.Release.1.13.64-bit.deb
     - https://releases.hashicorp.com/vagrant/2.1.2/vagrant_2.1.2_x86_64.deb

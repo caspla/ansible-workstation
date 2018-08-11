@@ -31,6 +31,6 @@
     
 - name: Install basic packages (2/2)
   become: true
-  apt: deb={{ item }} state=present
+  apt: deb={{ item }}
   with_items:
     - https://launchpad.net/~ravefinity-project/+archive/ubuntu/ppa/+files/vibrancy-colors_2.7~xenial~Noobslab.com_all.deb
