@@ -1,0 +1,8 @@
+- name: Install xfce packages
+  become: true
+  apt: name={{ item }} state=present
+  with_items:
+    - xfce4
+    - xfce4-goodies
+    - xfce4-screenshooter-plugin
+    - arc-theme

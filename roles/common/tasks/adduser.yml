@@ -1,0 +1,4 @@
+- name: Create user and add to sudo group
+  user:
+    name: "{{ user }}"
+    group: sudo

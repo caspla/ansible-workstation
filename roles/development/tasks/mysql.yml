@@ -1,0 +1,16 @@
+- name: Install dev packages (1/2)
+  become: true
+  apt: name={{ item }} state=present
+  with_items:
+    - mysql-client
+
+- name: Create HeidiSQL target directory
+  file: path="{{ home_dir }}/.wine/drive_c/Programm Files/HeidiSQL" state=directory
+
+- name: Download and extract HeidiSQL archive
+  unarchive:
+    src: https://www.heidisql.com/downloads/releases/HeidiSQL_9.5_64_Portable.zip
+    dest: "{{ home_dir }}/.wine/drive_c/Programm Files/HeidiSQL"
+    remote_src: yes
+
+#- name: Create HeidiSQL start script

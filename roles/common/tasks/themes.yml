@@ -1,0 +1,16 @@
+- name: Install GTK themes
+  become: true
+  apt: name={{ item }} state=present
+  with_items:
+    - arc-theme
+    
+- name: Install icon themes
+  become: true
+  apt: deb={{ item }}
+  with_items:
+    - https://launchpad.net/~ravefinity-project/+archive/ubuntu/ppa/+files/vibrancy-colors_2.7~xenial~Noobslab.com_all.deb
+
+- name: Update icon caches
+  shell: "gtk-update-icon-cache {{ item }}"
+  with_items:
+    - /usr/share/icons/Vibrancy-Dark-Aqua

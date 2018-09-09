@@ -1,15 +1,15 @@
+- import_tasks: ../../virtualization/tasks/virtualbox.yml
+- import_tasks: ../../virtualization/tasks/vagrant.yml
+- import_tasks: ../../virtualization/tasks/docker.yml
+- import_tasks: mysql.yml
 
-- name: Create HeidiSQL target directory
-  file: path="{{ home_dir }}/.wine/drive_c/Programm Files/HeidiSQL" state=directory
-
-- name: Download and extract HeidiSQL archive
-  unarchive:
-    src: https://www.heidisql.com/downloads/releases/HeidiSQL_9.5_64_Portable.zip
-    dest: "{{ home_dir }}/.wine/drive_c/Programm Files/HeidiSQL"
-    remote_src: yes
-
-#- name: Create HeidiSQL start script
-
+- name: Install php related packages
+  become: true
+  apt: name={{ item }} state=present
+  with_items:
+    - composer
+    - php-cli
+    
 - name: Download and extract postman archive
   become: true
   unarchive:

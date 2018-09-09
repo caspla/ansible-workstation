@@ -1,7 +1,7 @@
 - name: Fetch dotfiles from github repository
   git:
     repo: "{{ dotfiles_git }}"
-    dest: "/home/{{ ansible_env.USER }}/dotfiles"
+    dest: "/home/{{ user }}/dotfiles"
     accept_hostkey: yes
 
 - name: Create needed directories
@@ -9,12 +9,12 @@
     path: "{{ item }}"
     state: directory
   with_items:
-    - "/home/{{ ansible_env.USER }}/.config"
+    - "/home/{{ user }}/.config"
 
 - name: link dotfiles
   file:
-    src: "/home/{{ ansible_env.USER }}/dotfiles/{{ item.src }}"
-    dest: "/home/{{ ansible_env.USER }}/{{ item.dest }}"
+    src: "/home/{{ user }}/dotfiles/{{ item.src }}"
+    dest: "/home/{{ user }}/{{ item.dest }}"
     state: link
     force: yes
   with_items:

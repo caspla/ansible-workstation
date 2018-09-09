@@ -1,0 +1,23 @@
+- name: Add virtualbox package key
+  become: true
+  apt_key: url={{ item }} state=present
+  with_items:
+    - https://www.virtualbox.org/download/oracle_vbox_2016.asc
+
+- name: Add virtualbox repository
+  become: true
+  apt_repository: repo={{ item }} state=present
+  with_items:
+    - "deb https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib"
+
+- name: Remove old virtualbox package
+  become: true
+  apt: name={{ item }} state=absent
+  with_items:
+   - virtualbox
+
+- name: Install new virtualbox package
+  become: true
+  apt: name={{ item }} state=present
+  with_items:
+    - virtualbox-5.2

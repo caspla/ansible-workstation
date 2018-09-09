@@ -1,0 +1,25 @@
+- name: Add docker package
+  become: true
+  apt_key: url={{ item }} state=present
+  with_items:
+    - https://download.docker.com/linux/debian/gpg
+
+- name: Add docker repository
+  become: true
+  apt_repository: repo={{ item }} state=present
+  with_items:
+    - "deb https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+
+- name: Remove old docker packages
+  become: true
+  apt: name={{ item }} state=absent
+  with_items:
+   - docker
+   - docker-engine
+   - docker.io
+
+- name: Install new docker package
+  become: true
+  apt: name={{ item }} state=present
+  with_items:
+    - docker-ce

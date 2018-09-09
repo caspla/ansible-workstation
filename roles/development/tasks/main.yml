@@ -1,0 +1,5 @@
+- include: mysql.yml
+  when: devtools is defined
+
+- include: php.yml
+  when: devtools is defined

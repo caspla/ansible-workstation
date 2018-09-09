@@ -1,0 +1,7 @@
+- import_tasks: virtualbox.yml
+
+- name: Install vagrant
+  become: true
+  apt: deb={{ item }}
+  with_items:
+    - https://releases.hashicorp.com/vagrant/2.1.2/vagrant_2.1.2_x86_64.deb
